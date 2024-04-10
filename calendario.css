@@ -1,0 +1,127 @@
+/* Estilos para o corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #dbdadac7;
+}
+
+/* Estilos para o cabeçalho */
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Estilos para o título do cabeçalho */
+header h1 {
+    margin: 0;
+}
+
+/* Estilos para a seção principal */
+main {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+/* Estilos para a tabela do calendário */
+#calendario table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#calendario th,
+#calendario td {
+    border: 2px solid #707070;
+    padding: 50px;
+    text-align: center;
+}
+
+#calendario th {
+    background-color: #ddd;
+}
+
+/* Estilos para a célula do dia atual */
+#calendario .hoje {
+    background-color: #f00;
+    color: #fff;
+}
+
+/* Estilos para a barra lateral */
+aside {
+    width: 200px;
+    background-color: #fff;
+    padding: 20px;
+}
+
+/* Estilos para os eventos na barra lateral */
+.evento {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.evento h3 {
+    margin-top: 0;
+}
+
+/* Estilos para o rodapé */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+.animated-button {
+    position: relative;
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    font-size: 16px;
+    background-color: inherit;
+    border-radius: 100px;
+    font-weight: 600;
+    color: #ffffff;
+    box-shadow: 0 0 0 2px #ffffff;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  }
+  
+  .animated-button span:last-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: #727272;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+  }
+  
+  .animated-button span:first-child {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .animated-button:hover {
+    box-shadow: 0 0 0 5px #83838360;
+    color: #ffffff;
+  }
+  
+  .animated-button:active {
+    scale: 0.95;
+  }
+  
+  .animated-button:hover span:last-child {
+    width: 150px;
+    height: 150px;
+    opacity: 1;
+  }
+  
+  
+  

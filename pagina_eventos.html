@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos do Dia</title>
+    <link rel="stylesheet" href="pagina_eventos.css">
+</head>
+<body>
+    <header>
+        <h1>Eventos do Dia</h1>
+    </header>
+    <main>
+        <h2>Eventos para o Dia 01 de Mês de Ano</h2>
+        <!-- Aqui você pode adicionar um formulário para cadastrar novos eventos -->
+        <form id="evento-form">
+            <label for="titulo">Título do Evento:</label><br>
+            <input type="text" id="titulo" name="titulo" required><br><br>
+            
+            <label for="detalhes">Detalhes:</label><br>
+            <textarea id="detalhes" name="detalhes" rows="4" cols="50"></textarea><br><br>
+            
+            <button id="mesAnterior" class="animated-button">
+                <span>Adicionar Evento</span>
+                <span></span>
+            </button>
+        </form>
+        <!-- Aqui você pode exibir os eventos cadastrados para o dia selecionado -->
+        <div id="eventos-lista">
+            <!-- Os eventos serão inseridos aqui dinamicamente com JavaScript -->
+        </div>
+    </main>
+    <footer>
+        <button id="Home Page" class="animated-button">
+        <a href="index.html">Home Page</a>
+    </button>
+    </footer>
+    <script src="calendario.js"></script>
+</body>
+</html>
