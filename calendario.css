@@ -4,6 +4,9 @@ body {
     margin: 0;
     padding: 0;
     background-color: #dbdadac7;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Estilos para o cabeçalho */
@@ -22,49 +25,28 @@ header h1 {
 /* Estilos para a seção principal */
 main {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center; /* Centraliza os itens na direção principal (verticalmente) */
     margin: 20px;
+    flex-grow: 1; /* Para preencher o espaço restante */
 }
 
 /* Estilos para a tabela do calendário */
 #calendario table {
-    width: 100%;
-    border-collapse: collapse;
+    width: auto; /* Alterado de 100% para auto para que a largura seja baseada no conteúdo */
+    border-collapse: initial;
+    margin-bottom: 10px; /* Espaçamento entre o calendário e o botão */
 }
 
 #calendario th,
 #calendario td {
-    border: 2px solid #707070;
-    padding: 50px;
+    border: 1px solid #707070;
+    padding: 30px; /* Reduzido o padding para ficar mais compacto */
     text-align: center;
 }
 
 #calendario th {
     background-color: #ddd;
-}
-
-/* Estilos para a célula do dia atual */
-#calendario .hoje {
-    background-color: #f00;
-    color: #fff;
-}
-
-/* Estilos para a barra lateral */
-aside {
-    width: 200px;
-    background-color: #fff;
-    padding: 20px;
-}
-
-/* Estilos para os eventos na barra lateral */
-.evento {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-}
-
-.evento h3 {
-    margin-top: 0;
 }
 
 /* Estilos para o rodapé */
@@ -74,54 +56,36 @@ footer {
     text-align: center;
     padding: 20px 0;
 }
-.animated-button {
-    position: relative;
-    display: inline-block;
-    padding: 12px 24px;
+
+/* Estilos para os botões */
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: auto; /* Coloca os botões no final da página */
+    margin-bottom: 20px; /* Espaçamento entre os botões e o rodapé */
+}
+button {
+    --hover-shadows: 6px 6px 10px #121212, -6px -6px 10px #bebebe;
+    --accent: rgb(90, 90, 90);
+    font-weight: bold;
+    letter-spacing: 0.1em;
     border: none;
-    font-size: 16px;
-    background-color: inherit;
-    border-radius: 100px;
-    font-weight: 600;
-    color: #ffffff;
-    box-shadow: 0 0 0 2px #ffffff;
+    border-radius: 1.1em;
+    background-color: #00000063;
     cursor: pointer;
-    overflow: hidden;
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    color: white;
+    padding: 1em 2em;
+    transition: box-shadow ease-in-out 0.3s, background-color ease-in-out 0.1s,
+      letter-spacing ease-in-out 0.1s, transform ease-in-out 0.1s;
+    }
+  
+  button:hover {
+    box-shadow: var(--hover-shadows);
   }
   
-  .animated-button span:last-child {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    background-color: #727272;
-    border-radius: 50%;
-    opacity: 0;
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+  button:active {
+    box-shadow: var(--hover-shadows), var(--accent) 0px 0px 30px 5px;
+    background-color: var(--accent);
+    transform: scale(0.95);
   }
-  
-  .animated-button span:first-child {
-    position: relative;
-    z-index: 1;
-  }
-  
-  .animated-button:hover {
-    box-shadow: 0 0 0 5px #83838360;
-    color: #ffffff;
-  }
-  
-  .animated-button:active {
-    scale: 0.95;
-  }
-  
-  .animated-button:hover span:last-child {
-    width: 150px;
-    height: 150px;
-    opacity: 1;
-  }
-  
-  
   

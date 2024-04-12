@@ -1,99 +1,96 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", () => {
     const mesAtualElement = document.getElementById('mesAtual');
     const botaoMesAnterior = document.getElementById('mesAnterior');
     const botaoProximoMes = document.getElementById('proxMes');
+    const eventosLista = document.getElementById('eventos-lista');
+    const anoSelect = document.getElementById('anoSelect');
+    let [mes, ano] = [parseInt(localStorage.getItem('mes')) || new Date().getMonth() + 1, parseInt(localStorage.getItem('ano')) || new Date().getFullYear()];
+    const nomeMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
-    let mes = localStorage.getItem('mes') || new Date().getMonth() + 1; // Mês atual (1-12)
-    let ano = localStorage.getItem('ano') || new Date().getFullYear(); // Ano atual
+    const exibirMesAtual = () => mesAtualElement.textContent = `${nomeMeses[mes - 1]} ${ano}`;
 
-    const nomeMeses = [
-        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-    ];
+    const obterNumeroDiasNoMes = (mes, ano) => {
+        return new Date(ano, mes, 0).getDate();
+    };
 
-    // Função para exibir o mês atual
-    function exibirMesAtual() {
-        mesAtualElement.textContent = `${nomeMeses[mes - 1]} ${ano}`;
-    }
-
-    // Função para atualizar o calendário com os dias do mês atual
-    function atualizarCalendario() {
-        const diasNoMes = new Date(ano, mes, 0).getDate(); // Número de dias no mês
-        const primeiraSemana = new Date(ano, mes - 1, 1).getDay(); // Dia da semana do primeiro dia do mês (0-6, onde 0 é domingo)
-
+    const preencherCalendario = () => {
+        const numeroDias = obterNumeroDiasNoMes(mes, ano);
+        const primeiraSemana = new Date(ano, mes - 1, 1).getDay();
         const tbody = document.querySelector('#calendario tbody');
-        tbody.innerHTML = ''; // Limpa o conteúdo atual do tbody
+        tbody.innerHTML = '';
 
         let dia = 1;
 
-        // Loop para criar as linhas e colunas do calendário
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; dia <= numeroDias; i++) {
             const tr = document.createElement('tr');
-
-            // Loop para criar as células de cada linha
+            
+            // Preenche cada célula da linha com os dias do mês
             for (let j = 0; j < 7; j++) {
                 const td = document.createElement('td');
-
+                
                 if (i === 0 && j < primeiraSemana) {
                     // Células vazias antes do primeiro dia do mês
                     td.textContent = '';
-                } else if (dia > diasNoMes) {
+                } else if (dia > numeroDias) {
                     // Células vazias após o último dia do mês
                     td.textContent = '';
                 } else {
                     // Células com os dias do mês
                     td.textContent = dia;
-                    td.dataset.dia = dia; // Adiciona o atributo 'dia' para identificar o dia
+                    td.dataset.dia = dia;
+                    td.addEventListener('click', () => {
+                        exibirEventoDoDia(td.dataset.dia);
+                    });
                     dia++;
                 }
-
-                // Adiciona evento de clique para selecionar o dia
-                td.addEventListener('click', function() {
-                    const diaSelecionado = this.dataset.dia;
-                    localStorage.setItem('dia', diaSelecionado);
-                    window.location.href = `pagina_eventos.html`;
-                });
-
+                
                 tr.appendChild(td);
             }
-
+            
             tbody.appendChild(tr);
         }
-    }
+    };
 
-    // Função para navegar para o mês anterior
-    function mesAnterior() {
-        if (mes === 1) {
+    const exibirEventoDoDia = (dia) => {
+        localStorage.setItem('dia', dia);
+        window.location.href = `pagina_eventos.html?ano=${ano}&mes=${mes}&dia=${dia}`;
+    };
+
+    const alterarMes = (delta) => {
+        mes += delta;
+        if (mes < 1) {
             mes = 12;
             ano--;
-        } else {
-            mes--;
-        }
-        localStorage.setItem('mes', mes);
-        localStorage.setItem('ano', ano);
-        exibirMesAtual();
-        atualizarCalendario();
-    }
-
-    // Função para navegar para o próximo mês
-    function proximoMes() {
-        if (mes === 12) {
+        } else if (mes > 12) {
             mes = 1;
             ano++;
-        } else {
-            mes++;
         }
         localStorage.setItem('mes', mes);
         localStorage.setItem('ano', ano);
         exibirMesAtual();
-        atualizarCalendario();
-    }
+        preencherCalendario();
+    };
 
-    // Adiciona event listeners para os botões de navegação
-    botaoMesAnterior.addEventListener('click', mesAnterior);
-    botaoProximoMes.addEventListener('click', proximoMes)
+    botaoMesAnterior.addEventListener('click', () => alterarMes(-1));
+    botaoProximoMes.addEventListener('click', () => alterarMes(1));
 
-    // Chamada inicial para exibir o mês atual e atualizar o calendário
+    const preencherSelectAno = () => {
+        const anoAtual = new Date().getFullYear();
+        for (let i = anoAtual - 10; i <= anoAtual + 10; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i;
+            anoSelect.appendChild(option);
+        }
+        anoSelect.value = ano;
+        anoSelect.addEventListener('change', () => {
+            ano = parseInt(anoSelect.value);
+            localStorage.setItem('ano', ano);
+            preencherCalendario();
+        });
+    };
+
+    preencherSelectAno();
     exibirMesAtual();
-    atualizarCalendario();
+    preencherCalendario();
 });
