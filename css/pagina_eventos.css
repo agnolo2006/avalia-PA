@@ -44,7 +44,8 @@ textarea {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Mudança na fonte para uma mais elegante */
 }
 
-button[type="submit"] {
+button[type="submit"],
+button.remover-evento {
     background-color: #00ccff;
     color: white;
     padding: 10px 20px;
@@ -56,7 +57,8 @@ button[type="submit"] {
     transition: background-color 0.3s ease; /* Transição suave de cor */
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:hover,
+button.remover-evento:hover {
     background-color:  #00ccff;
 }
 

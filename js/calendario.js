@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     dia++;
                 }
                 
+           
                 tr.appendChild(td);
             }
             
@@ -90,7 +91,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+    function pintarFundo(){
+        let dia = localStorage.getItem("dia");
+        g = document.querySelectorAll('td')
+   
+        dd = (g[dia])
+        
+        console.log(dd)
+         
+    }
+
     preencherSelectAno();
     exibirMesAtual();
     preencherCalendario();
+    pintarFundo()
 });

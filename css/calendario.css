@@ -39,17 +39,19 @@ main {
     width: auto; /* Alterado de 100% para auto para que a largura seja baseada no conteúdo */
     border-collapse: initial;
     margin-bottom: 10px; /* Espaçamento entre o calendário e o botão */
+    background-color: #ffffffbb; /* Adicionando fundo branco */
 }
 
 #calendario th,
 #calendario td {
     border: 1px solid #707070;
-    padding: 30px; /* Reduzido o padding para ficar mais compacto */
+    padding: 40px; /* Reduzido o padding para ficar mais compacto */
     text-align: center;
 }
 
-#calendario th {
-    background-color: #ddd;
+/* Estilos para dias com eventos */
+#calendario tbody td.temEvento {
+    background-color: #ffcc00; /* Cor de fundo para destacar dias com eventos */
 }
 
 /* Estilos para o rodapé */
@@ -67,6 +69,7 @@ footer {
     margin-top: auto; /* Coloca os botões no final da página */
     margin-bottom: 20px; /* Espaçamento entre os botões e o rodapé */
 }
+
 button {
     --hover-shadows: 6px 6px 10px #00ccff, -6px -6px 10px #2387af;
     --accent: rgb(35, 84, 175);
@@ -80,29 +83,14 @@ button {
     padding: 1em 2em;
     transition: box-shadow ease-in-out 0.3s, background-color ease-in-out 0.1s,
       letter-spacing ease-in-out 0.1s, transform ease-in-out 0.1s;
-    }
-  
-  button:hover {
+}
+
+button:hover {
     box-shadow: var(--hover-shadows);
-  }
-  
-  button:active {
+}
+
+button:active {
     box-shadow: var(--hover-shadows), var(--accent) 0px 0px 30px 5px;
     background-color: var(--accent);
     transform: scale(0.95);
-  }
-  #calendario table {
-    width: auto; /* Alterado de 100% para auto para que a largura seja baseada no conteúdo */
-    border-collapse: initial;
-    margin-bottom: 10px; /* Espaçamento entre o calendário e o botão */
-    background-color: #ffffffbb; /* Adicionando fundo branco */
 }
-
-#calendario th,
-#calendario td {
-    border: 1px solid #707070;
-    padding: 40px; /* Reduzido o padding para ficar mais compacto */
-    text-align: center;
-}
-
-  
