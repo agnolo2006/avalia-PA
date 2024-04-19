@@ -49,11 +49,6 @@ main {
     text-align: center;
 }
 
-/* Estilos para dias com eventos */
-#calendario tbody td.temEvento {
-    background-color: #ffcc00; /* Cor de fundo para destacar dias com eventos */
-}
-
 /* Estilos para o rodapé */
 footer {
     background-color: #333;
@@ -94,4 +89,8 @@ button:active {
     background-color: var(--accent);
     transform: scale(0.95);
 }
-
+/* Estilos para os dias com eventos */
+.tem-evento {
+    background-color: #00ccffc4; /* Cor de fundo para os dias com eventos */
+  }
+  

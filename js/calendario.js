@@ -40,6 +40,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Células com os dias do mês
                     td.textContent = dia;
                     td.dataset.dia = dia;
+
+                    // Verifica se há eventos para este dia e adiciona uma classe se houver
+                    const eventos = JSON.parse(localStorage.getItem(`eventos_${ano}_${mes}_${dia}`)) || [];
+                    if (eventos.length > 0) {
+                        td.classList.add('tem-evento');
+                    }
+
                     td.addEventListener('click', () => {
                         diaSelecionado = parseInt(td.dataset.dia);
                         localStorage.setItem('dia', diaSelecionado);
@@ -48,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     dia++;
                 }
                 
-           
                 tr.appendChild(td);
             }
             
@@ -89,7 +95,8 @@ document.addEventListener("DOMContentLoaded", () => {
     botaoProximoMes.addEventListener('click', () => alterarMes(1));
 
     const atualizarListaEventos = () => {
-       const dia = localStorage.getItem('dia');
+       
+        const dia = localStorage.getItem('dia');
         const eventos = JSON.parse(localStorage.getItem(`eventos_${ano}_${mes}_${dia}`)) || [];
 
         eventos.forEach((evento, indice) => {
