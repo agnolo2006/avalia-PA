@@ -44,24 +44,6 @@ textarea {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Mudança na fonte para uma mais elegante */
 }
 
-button[type="submit"],
-button.remover-evento {
-    background-color: #00ccff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Mudança na fonte para uma mais elegante */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    transition: background-color 0.3s ease; /* Transição suave de cor */
-}
-
-button[type="submit"]:hover,
-button.remover-evento:hover {
-    background-color:  #00ccff;
-}
-
 #eventos-lista {
     border: 1px solid #ccc;
     border-radius: 4px;

@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     adicionarEventoBtn.addEventListener('click', () => {
         const titulo = document.getElementById('titulo').value;
         const detalhes = document.getElementById('detalhes').value;
-        
 
         // Verifica se os campos estão preenchidos
         if (titulo.trim() !== '' && detalhes.trim() !== '') {
@@ -46,9 +45,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 eventoElement.innerHTML = `
                     <h3>${evento.titulo}</h3>
                     <p>${evento.detalhes}</p>
-                    <button class="remover-evento" data-indice="${indice}">Remover</button>
+                    <button class="editar-evento animated-button" data-indice="${indice}"><span>Editar</span><span></span></button>
+                    <button class="remover-evento animated-button" data-indice="${indice}"><span>Remover</span><span></span></button>
                 `;
                 eventosLista.appendChild(eventoElement);
+            });
+
+            // Adiciona ouvintes de evento para os botões de edição
+            const botoesEditar = document.querySelectorAll('.editar-evento');
+            botoesEditar.forEach(botao => {
+                botao.addEventListener('click', () => {
+                    const indice = botao.getAttribute('data-indice');
+                    editarEvento(indice);
+                });
             });
 
             // Adiciona ouvintes de evento para os botões de exclusão
@@ -60,6 +69,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             });
         }
+    };
+
+    const editarEvento = (indice) => {
+        const ano = localStorage.getItem('ano');
+        const mes = localStorage.getItem('mes');
+        const dia = localStorage.getItem('dia');
+        let eventos = JSON.parse(localStorage.getItem(`eventos_${ano}_${mes}_${dia}`)) || [];
+        const evento = eventos[indice];
+
+        // Preencher o formulário de evento com os detalhes do evento selecionado para edição
+        document.getElementById('titulo').value = evento.titulo;
+        document.getElementById('detalhes').value = evento.detalhes;
+
+        // Remover o evento antigo da lista
+        eventos.splice(indice, 1);
+        localStorage.setItem(`eventos_${ano}_${mes}_${dia}`, JSON.stringify(eventos));
+
+        // Atualizar a lista de eventos
+        atualizarListaEventos();
     };
 
     const removerEvento = (indice) => {

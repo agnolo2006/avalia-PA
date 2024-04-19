@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const botaoProximoMes = document.getElementById('proxMes');
     const eventosLista = document.getElementById('eventos-lista');
     const anoSelect = document.getElementById('anoSelect');
-    let [mes, ano] = [parseInt(localStorage.getItem('mes')) || new Date().getMonth() + 1, parseInt(localStorage.getItem('ano')) || new Date().getFullYear()];
+    const ano = 2024; // Definindo o ano como 2024
+    let mes = parseInt(localStorage.getItem('mes')) || new Date().getMonth() + 1;
+    let diaSelecionado = parseInt(localStorage.getItem('dia')) || new Date().getDate();
     const nomeMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
     const exibirMesAtual = () => mesAtualElement.textContent = `${nomeMeses[mes - 1]} ${ano}`;
@@ -39,7 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     td.textContent = dia;
                     td.dataset.dia = dia;
                     td.addEventListener('click', () => {
-                        exibirEventoDoDia(td.dataset.dia);
+                        diaSelecionado = parseInt(td.dataset.dia);
+                        localStorage.setItem('dia', diaSelecionado);
+                        exibirEventoDoDia(diaSelecionado);
                     });
                     dia++;
                 }
@@ -53,7 +57,17 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const exibirEventoDoDia = (dia) => {
-        localStorage.setItem('dia', dia);
+        // Adiciona um evento fictício no localStorage para o dia selecionado
+        const eventos = JSON.parse(localStorage.getItem("eventos")) || {};
+        eventos[dia] = true;
+        localStorage.setItem('eventos', JSON.stringify(eventos));
+
+        // Verifica se o evento foi adicionado ao dia
+        if (eventos[dia]) {
+            const td = document.querySelector(`td[data-dia="${dia}"]`);
+            td.classList.add('evento-dia');
+        }
+
         window.location.href = `pagina_eventos.html?ano=${ano}&mes=${mes}&dia=${dia}`;
     };
 
@@ -66,8 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mes = 1;
             ano++;
         }
-        localStorage.setItem('mes', mes);
-        localStorage.setItem('ano', ano);
+        localStorage.setItem('mes', mes); // Atualiza o mês no localStorage
         exibirMesAtual();
         preencherCalendario();
     };
@@ -75,34 +88,42 @@ document.addEventListener("DOMContentLoaded", () => {
     botaoMesAnterior.addEventListener('click', () => alterarMes(-1));
     botaoProximoMes.addEventListener('click', () => alterarMes(1));
 
-    const preencherSelectAno = () => {
-        const anoAtual = new Date().getFullYear();
-        for (let i = anoAtual - 10; i <= anoAtual + 10; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.textContent = i;
-            anoSelect.appendChild(option);
-        }
-        anoSelect.value = ano;
-        anoSelect.addEventListener('change', () => {
-            ano = parseInt(anoSelect.value);
-            localStorage.setItem('ano', ano);
-            preencherCalendario();
+    const atualizarListaEventos = () => {
+       const dia = localStorage.getItem('dia');
+        const eventos = JSON.parse(localStorage.getItem(`eventos_${ano}_${mes}_${dia}`)) || [];
+
+        eventos.forEach((evento, indice) => {
+            const eventoElement = document.createElement('div');
+            eventoElement.classList.add('evento');
+            eventoElement.innerHTML = `
+                <h3>${evento.titulo}</h3>
+                <p>${evento.detalhes}</p>
+                <button class="remover-evento" data-indice="${indice}">Remover</button>
+            `;
+            eventosLista.appendChild(eventoElement);
+        });
+
+        // Adiciona ouvintes de evento para os botões de exclusão
+        const botoesRemover = document.querySelectorAll('.remover-evento');
+        botoesRemover.forEach(botao => {
+            botao.addEventListener('click', () => {
+                const indice = botao.getAttribute('data-indice');
+                removerEvento(indice);
+            });
         });
     };
 
-    function pintarFundo(){
-        let dia = localStorage.getItem("dia");
-        g = document.querySelectorAll('td')
-   
-        dd = (g[dia])
-        
-        console.log(dd)
-         
-    }
+    const removerEvento = (indice) => {
+        let eventos = JSON.parse(localStorage.getItem(`eventos_${ano}_${mes}_${diaSelecionado}`)) || [];
+        eventos.splice(indice, 1);
+        localStorage.setItem(`eventos_${ano}_${mes}_${diaSelecionado}`, JSON.stringify(eventos));
+        atualizarListaEventos();
+    };
 
-    preencherSelectAno();
+    // Exibe o dia selecionado no console
+    console.log('Dia selecionado:', diaSelecionado);
+
     exibirMesAtual();
     preencherCalendario();
-    pintarFundo()
+    atualizarListaEventos();
 });
